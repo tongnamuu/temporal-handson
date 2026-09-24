@@ -1,0 +1,17 @@
+name: temporal-handson-rook
+
+services:
+  temporal:
+    image: temporalio/temporal:1.9.1
+    command:
+      - server
+      - start-dev
+      - --ip
+      - 0.0.0.0
+      - --ui-ip
+      - 0.0.0.0
+      - --namespace
+      - handson
+    ports:
+      - '127.0.0.1:17233:7233'
+      - '127.0.0.1:18233:8233'
