@@ -21,3 +21,10 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+tasks.register<JavaExec>("runGreeting") {
+    group = "application"
+    description = "Greeting 클라이언트를 실행합니다."
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass.set("client.GreetingClient")
+}
