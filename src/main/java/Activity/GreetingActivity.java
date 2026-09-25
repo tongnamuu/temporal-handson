@@ -1,8 +1,9 @@
 package Activity;
 
+import contract.GreetingActivityResult;
 import io.temporal.activity.ActivityInterface;
 
 @ActivityInterface
 public interface GreetingActivity {
-    String greet(String name);
+    GreetingActivityResult greet(String name);
 }

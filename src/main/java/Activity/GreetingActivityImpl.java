@@ -1,8 +1,10 @@
 package Activity;
 
+import contract.GreetingActivityResult;
+
 public class GreetingActivityImpl implements GreetingActivity {
     @Override
-    public String greet(String name) {
-        return "Hello " + name;
+    public GreetingActivityResult greet(String name) {
+        return new GreetingActivityResult("Hello " + name);
     }
 }

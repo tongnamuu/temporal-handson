@@ -1,6 +1,7 @@
 package client;
 
 import config.LabConfig;
+import contract.GreetingActivityResult;
 import io.temporal.client.WorkflowClient;
 import io.temporal.client.WorkflowClientOptions;
 import io.temporal.client.WorkflowOptions;
@@ -10,7 +11,6 @@ import io.temporal.serviceclient.WorkflowServiceStubsOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import workflow.GreetingInput;
-import workflow.GreetingResult;
 
 public class GreetingClient {
     private static final Logger log = LoggerFactory.getLogger(GreetingClient.class);
@@ -32,7 +32,7 @@ public class GreetingClient {
                             .build());
 
             String workflowId = workflow.start(new GreetingInput(name)).getWorkflowId();
-            GreetingResult result = workflow.getResult(GreetingResult.class);
+            GreetingActivityResult result = workflow.getResult(GreetingActivityResult.class);
             log.info("workflowId={}, result={}", workflowId, result.message());
         } finally {
             service.shutdown();
