@@ -43,3 +43,12 @@ Client 코드 실행결과
 Worker 결과 확인
 
 ![img_7.png](images/img_7.png)
+
+Activity 연동이후 아래 명령어를 실행하면 Activity로부터 Hello 가 붙는것을 볼 수 있습니다
+
+
+```aiexclude
+./gradlew runGreeting --args="gradleTask"
+```
+
+![img_2.png](images/img_8.png)
