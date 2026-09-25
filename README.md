@@ -31,3 +31,15 @@ http://127.0.0.1:18233/namespaces/handson/workflows 웹 페이지를 확인합�
 웹도 확인할 수 있습니다.
 ![img_5.png](images/img_5.png)
 
+### Step 2
+
+```aiexclude
+./gradlew runGreeting --args="gradleTask"
+```
+Client 코드 실행결과
+
+![img_6.png](images/img_6.png)
+
+Worker 결과 확인
+
+![img_7.png](images/img_7.png)
