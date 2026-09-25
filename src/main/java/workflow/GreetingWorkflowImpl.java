@@ -1,9 +1,11 @@
 package workflow;
 
 import Activity.GreetingActivity;
+import contract.ChildActivityResult;
 import contract.GreetingActivityResult;
 import io.temporal.activity.ActivityOptions;
 import io.temporal.common.RetryOptions;
+import io.temporal.workflow.ChildWorkflowOptions;
 import io.temporal.workflow.Workflow;
 import org.slf4j.Logger;
 
@@ -21,8 +23,21 @@ public class GreetingWorkflowImpl implements GreetingWorkflow {
 
     @Override
     public GreetingActivityResult greet(GreetingInput input) {
-        log.info("Greeting 처리: workerPid={}, workflowId={}",
-                WORKER_PID, Workflow.getInfo().getWorkflowId());
-        return activity.greet(input.name());
+        String workflowId = Workflow.getInfo().getWorkflowId();
+        log.info("Greeting 처리: workerPid={}, workflowId={}", WORKER_PID, workflowId);
+        GreetingActivityResult result = activity.greet(input.name());
+
+        String childWorkflowId = workflowId + "-child";
+        ChildGreetingWorkflow child = Workflow.newChildWorkflowStub(
+                ChildGreetingWorkflow.class,
+                ChildWorkflowOptions.newBuilder()
+                        .setWorkflowId(childWorkflowId)
+                        .build());
+        log.info("Child 호출: workerPid={}, workflowId={}, childWorkflowId={}",
+                WORKER_PID, workflowId, childWorkflowId);
+        ChildActivityResult childResult = child.greet(result);
+        log.info("Child 완료: workerPid={}, workflowId={}, childWorkflowId={}, childResult={}",
+                WORKER_PID, workflowId, childWorkflowId, childResult.message());
+        return new GreetingActivityResult(childResult.message());
     }
 }
